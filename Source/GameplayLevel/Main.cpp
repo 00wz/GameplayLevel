@@ -1,14 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Main.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
-#include "Main.h"
 #include "BatBase.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 
 // Sets default values
 AMain::AMain()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 }
 
@@ -17,10 +18,10 @@ void AMain::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Controller = Controller = GetWorld()->GetFirstPlayerController();
 
 	if (MainMenuClass) // Check if the Asset is assigned in the blueprint.
 	{
+		Controller = GetWorld()->GetFirstPlayerController();
 		// Create the widget and store it.
 		MainMenu = CreateWidget<UStartCallingWidget>(Controller, MainMenuClass);
 
@@ -35,6 +36,8 @@ void AMain::BeginPlay()
 	}
 
 	SpawnerBalls = new BallSpawner(Bat);
+
+	CallMenu();
 }
 
 void AMain::Destroyed()
@@ -70,11 +73,12 @@ void AMain::CallMenu()
 {
 	MainMenu->SetVisibility(ESlateVisibility::Visible);
 	Controller->SetShowMouseCursor(true);
+	UWidgetBlueprintLibrary::SetInputMode_UIOnly(Controller);
 }
 
 void AMain::HideMenu()
 {
 	MainMenu->SetVisibility(ESlateVisibility::Hidden);
 	Controller->SetShowMouseCursor(false);
+	UWidgetBlueprintLibrary::SetInputMode_GameOnly(Controller);
 }
-
