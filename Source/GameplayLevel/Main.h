@@ -7,6 +7,7 @@
 #include "StartCallingWidget.h"
 #include "BatBase.h"
 #include "CoreMinimal.h"
+#include "HealthScoreWidget.h"
 #include "GameFramework/Actor.h"
 #include "Main.generated.h"
 
@@ -25,8 +26,14 @@ public:
 	UPROPERTY(EditAnyWhere)
 		ASpawnerBricks* BlockSpawner;
 
+	UPROPERTY(EditAnyWhere)
+		int MaxHealth;
+
 	UPROPERTY(EditAnywhere);
 		TSubclassOf<UStartCallingWidget> MainMenuClass;
+
+	UPROPERTY(EditAnywhere);
+		TSubclassOf<UHealthScoreWidget> HealthScoreWidgetClass;
 
 protected:
 	// Called when the game starts or when spawned
@@ -41,6 +48,8 @@ public:
 private:
 	UStartCallingWidget* MainMenu;
 
+	UHealthScoreWidget* HealthScoreUI;
+	
 	void StartGame();
 
 	void EndGame();
@@ -49,7 +58,15 @@ private:
 
 	void HideMenu();
 
+	void AddScore(ABlockBase*);
+
 	BallSpawner* SpawnerBalls;
 
 	APlayerController* Controller;
+
+	int CurrentHealth;
+
+	int CurrentScore;
+
+	void Lose();
 };

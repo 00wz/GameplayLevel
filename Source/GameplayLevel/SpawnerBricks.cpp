@@ -113,6 +113,7 @@ void ASpawnerBricks::DestroyAllBlocks()
 void ASpawnerBricks::RemoveBlock(ABlockBase* Block)
 {
 	Blocks.Remove(Block);
+	OnDestroyBlock.ExecuteIfBound(Block);
 	if (Blocks.Num() <= 0)
 	{
 			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Win!!!")));

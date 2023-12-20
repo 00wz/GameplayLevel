@@ -1,9 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Main.h"
-#include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
-#include "BatBase.h"
+#include "HealthScoreWidget.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 
 // Sets default values
@@ -18,10 +17,8 @@ void AMain::BeginPlay()
 {
 	Super::BeginPlay();
 
-
-	if (MainMenuClass) // Check if the Asset is assigned in the blueprint.
-	{
-		Controller = GetWorld()->GetFirstPlayerController();
+	Controller = GetWorld()->GetFirstPlayerController();
+	
 		// Create the widget and store it.
 		MainMenu = CreateWidget<UStartCallingWidget>(Controller, MainMenuClass);
 
@@ -33,7 +30,18 @@ void AMain::BeginPlay()
 			//let add it to the view port
 			MainMenu->AddToViewport();
 		}
-	}
+
+	
+		// Create the widget and store it.
+		HealthScoreUI = CreateWidget<UHealthScoreWidget>(Controller, HealthScoreWidgetClass);
+
+		// now you can use the widget directly since you have a referance for it.
+		// Extra check to  make sure the pointer holds the widget.
+		if (HealthScoreUI)
+		{
+			//let add it to the view port
+			HealthScoreUI->AddToViewport();
+		}
 
 	SpawnerBalls = new BallSpawner(Bat);
 
@@ -56,15 +64,21 @@ void AMain::StartGame()
 	HideMenu();
 	BlockSpawner->DestroyAllBlocks();
 	BlockSpawner->OnAllBlocksDestroyed.BindUObject(this, &AMain::EndGame);
-	SpawnerBalls->OnAllBallDestroyed.BindUObject(this, &AMain::EndGame);
+	SpawnerBalls->OnAllBallDestroyed.BindUObject(this, &AMain::Lose);
+	BlockSpawner->OnDestroyBlock.BindUObject(this, &AMain::AddScore);
 	BlockSpawner->SpawnBlocks();
 	SpawnerBalls->SpawnBall();
+	CurrentScore=0;
+	HealthScoreUI->SetScore(0);
+	CurrentHealth=MaxHealth;
+	HealthScoreUI->SetHealth(CurrentHealth);
 }
 
 void AMain::EndGame()
 {
 	BlockSpawner->OnAllBlocksDestroyed.Unbind();
 	SpawnerBalls->OnAllBallDestroyed.Unbind();
+	BlockSpawner->OnDestroyBlock.Unbind();
 	SpawnerBalls->DestroyAllBall();
 	CallMenu();
 }
@@ -82,3 +96,24 @@ void AMain::HideMenu()
 	Controller->SetShowMouseCursor(false);
 	UWidgetBlueprintLibrary::SetInputMode_GameOnly(Controller);
 }
+
+void AMain::AddScore(ABlockBase*)
+{
+	CurrentScore++;
+	HealthScoreUI->SetScore(CurrentScore);
+}
+
+void AMain::Lose()
+{
+	CurrentHealth--;
+	HealthScoreUI->SetHealth(CurrentHealth);
+	if(CurrentHealth<=0)
+	{
+		EndGame();
+	}
+	else
+	{
+		SpawnerBalls->SpawnBall();
+	}
+}
+
