@@ -37,3 +37,8 @@ void BallSpawner::DestroyAllBall()
 		Balls[i]->Destroy();
 	}
 }
+
+TArray<ABallBase*>* BallSpawner::GetBallsList()
+{
+	return new TArray<ABallBase*>(Balls);
+}

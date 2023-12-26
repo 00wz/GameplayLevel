@@ -44,12 +44,14 @@ void AMain::BeginPlay()
 		}
 
 	SpawnerBalls = new BallSpawner(Bat);
+	BonusesFactory = new BonusFactory(SpawnerBalls,Bat,BonusesConfig,GetWorld());
 
 	CallMenu();
 }
 
 void AMain::Destroyed()
 {
+	delete BonusesFactory;
 	delete SpawnerBalls;
 }
 
@@ -65,13 +67,14 @@ void AMain::StartGame()
 	BlockSpawner->DestroyAllBlocks();
 	BlockSpawner->OnAllBlocksDestroyed.BindUObject(this, &AMain::EndGame);
 	SpawnerBalls->OnAllBallDestroyed.BindUObject(this, &AMain::Lose);
-	BlockSpawner->OnDestroyBlock.BindUObject(this, &AMain::AddScore);
+	BlockSpawner->OnDestroyBlock.BindUObject(this, &AMain::OnBlockDestroy);
 	BlockSpawner->SpawnBlocks();
 	SpawnerBalls->SpawnBall();
 	CurrentScore=0;
 	HealthScoreUI->SetScore(0);
 	CurrentHealth=MaxHealth;
 	HealthScoreUI->SetHealth(CurrentHealth);
+	BonusesFactory->RevertBonuses();
 }
 
 void AMain::EndGame()
@@ -97,10 +100,12 @@ void AMain::HideMenu()
 	UWidgetBlueprintLibrary::SetInputMode_GameOnly(Controller);
 }
 
-void AMain::AddScore(ABlockBase*)
+void AMain::OnBlockDestroy(ABlockBase* Block)
 {
 	CurrentScore++;
 	HealthScoreUI->SetScore(CurrentScore);
+
+	BonusesFactory->SpawnBonusWithProbability((Block->GetTransform().GetLocation()),BonusProbability);
 }
 
 void AMain::Lose()

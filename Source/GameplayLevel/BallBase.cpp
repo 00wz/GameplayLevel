@@ -51,3 +51,8 @@ void ABallBase::SetMoveSpeed(FVector NewSpeed)
 	MoveSpeed = { NewSpeed.X,NewSpeed.Y,0 };
 }
 
+FVector ABallBase::GetMoveSpeed()
+{
+	return MoveSpeed;
+}
+

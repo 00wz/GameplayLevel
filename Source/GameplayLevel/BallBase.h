@@ -31,10 +31,11 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION(BlueprintCallable)
-		void SetMoveSpeed(FVector NewSpeed);
-
+	
+	void SetMoveSpeed(FVector NewSpeed);
+	
+	FVector GetMoveSpeed();
+	
 private:
 	void Move(float DeltaTime);
 };

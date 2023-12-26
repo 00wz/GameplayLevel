@@ -17,6 +17,8 @@ public:
 
 	NoParamDelegate OnAllBallDestroyed;
 
+	TArray<ABallBase*>* GetBallsList();
+
 private:
 	TArray<ABallBase*> Balls;
 

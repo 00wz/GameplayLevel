@@ -7,6 +7,8 @@
 #include "StartCallingWidget.h"
 #include "BatBase.h"
 #include "CoreMinimal.h"
+#include "BonusesConfig.h"
+#include "BonusFactory.h"
 #include "HealthScoreWidget.h"
 #include "GameFramework/Actor.h"
 #include "Main.generated.h"
@@ -35,6 +37,12 @@ public:
 	UPROPERTY(EditAnywhere);
 		TSubclassOf<UHealthScoreWidget> HealthScoreWidgetClass;
 
+	UPROPERTY(EditAnywhere)
+		UBonusesConfig* BonusesConfig;
+
+	UPROPERTY(EditAnywhere)
+		float BonusProbability;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -58,7 +66,7 @@ private:
 
 	void HideMenu();
 
-	void AddScore(ABlockBase*);
+	void OnBlockDestroy(ABlockBase*);
 
 	BallSpawner* SpawnerBalls;
 
@@ -69,4 +77,6 @@ private:
 	int CurrentScore;
 
 	void Lose();
+
+	BonusFactory* BonusesFactory;
 };
