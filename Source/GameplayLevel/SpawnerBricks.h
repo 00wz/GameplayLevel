@@ -41,6 +41,14 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 		bool IsValidBlockPosition(int Column, int Row);
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void RandomizeBlockPattern();
+	
+	UPROPERTY(BlueprintReadOnly)
+		int Rows;
+	UPROPERTY(BlueprintReadOnly)
+	 int Columns;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -54,7 +62,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void DestroyAllBlocks();
 private:
-	int Rows, Columns;
 	float X0, Y0, Z0;
 
 	TArray<ABlockBase*> Blocks;

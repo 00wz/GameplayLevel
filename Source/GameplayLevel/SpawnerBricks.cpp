@@ -84,6 +84,7 @@ void ASpawnerBricks::Init()
 
 void ASpawnerBricks::SpawnBlocks()
 {
+	RandomizeBlockPattern();
 	float posX = X0;
 	for(int r = 0;r <= Rows;r++)
 	{
