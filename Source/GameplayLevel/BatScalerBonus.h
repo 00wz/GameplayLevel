@@ -6,9 +6,6 @@
 #include "BonusBase.h"
 #include "BatScalerBonus.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class GAMEPLAYLEVEL_API ABatScalerBonus : public ABonusBase
 {

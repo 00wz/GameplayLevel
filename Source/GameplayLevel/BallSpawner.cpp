@@ -1,4 +1,3 @@
-
 #include "BallSpawner.h"
 
 BallSpawner::BallSpawner(ABatBase* Bat)

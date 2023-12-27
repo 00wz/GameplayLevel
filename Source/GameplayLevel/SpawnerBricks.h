@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "..\..\Intermediate\ProjectFiles\Delegates.h"
@@ -15,7 +13,6 @@ class GAMEPLAYLEVEL_API ASpawnerBricks : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ASpawnerBricks();
 
 	UPROPERTY(EditAnyWhere, BlueprintReadonly)
@@ -35,7 +32,6 @@ public:
 	BlockBaseDelegate OnDestroyBlock;
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintImplementableEvent)
@@ -50,7 +46,6 @@ protected:
 	 int Columns;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)

@@ -1,14 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "BonusBase.h"
 
 #include <string>
 
-// Sets default values
 ABonusBase::ABonusBase()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComponent"));
 	RootComponent = MeshComponent;
@@ -24,7 +19,6 @@ void ABonusBase::Init(float BonusFallSpeed_, ::BallSpawner* BallSpawner_, ABatBa
 	Bat=BatBase_;
 }
 
-// Called when the game starts or when spawned
 void ABonusBase::BeginPlay()
 {
 	Super::BeginPlay();
@@ -43,7 +37,6 @@ void ABonusBase::DisableBonus()
 		FString::Printf(TEXT("Bonus INACTIVATED")));
 }
 
-// Called every frame
 void ABonusBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

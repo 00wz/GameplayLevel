@@ -15,7 +15,5 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetScore(int value);
-	
-	//UFUNCTION(BlueprintImplementableEvent)
-	//void SetRecordScore(int value);
+
 };

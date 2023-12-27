@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -14,13 +12,11 @@ class GAMEPLAYLEVEL_API ABonusBase : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ABonusBase();
 
 	void Init(float BonusFallSpeed, BallSpawner* BallSpawner, ABatBase* BatBase);
 	
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	BallSpawner* BallSpawner;
@@ -38,7 +34,6 @@ protected:
 		float BonusFallSpeed;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	void InactivateBonus();

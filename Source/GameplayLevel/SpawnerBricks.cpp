@@ -1,38 +1,19 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "SpawnerBricks.h"
 #include "EmptyActor.h"
 #include "BlockBase.h"
-// Sets default values
+
 ASpawnerBricks::ASpawnerBricks()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	//TSubclassOf<AActor> ActorClass{};
-	/*
-	auto Pivot1 = GetWorld()->SpawnActor<AActor>();
-	auto Pivot2 = GetWorld()->SpawnActor<AActor>();
-	Pivot1->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-	Pivot2->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-	*/
-	
-	
-	//auto Pivot2 = GetWorld()->SpawnActor(AEmptyActor::StaticClass());
-	//Pivot1->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-	//Pivot2->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-	
 }
 
-// Called when the game starts or when spawned
 void ASpawnerBricks::BeginPlay()
 {
 	Super::BeginPlay();
 	World = GetWorld();
 	Init();
-	//SpawnBlocks();
 }
 
-// Called every frame
 void ASpawnerBricks::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -76,10 +57,6 @@ void ASpawnerBricks::Init()
 	X0 = (Height - (Padding * Rows)) / 2 + Bottom;
 
 	Z0 = (PivotLocation1.Z + PivotLocation2.Z) / 2;
-	//GEngine->AddOnScreenDebugMessage(-1, 999.0f, FColor::Yellow, FString::Printf(TEXT("Right=%f	Left=%f"), Right, Left));
-	//GEngine->AddOnScreenDebugMessage(-1, 999.0f, FColor::Yellow, FString::Printf(TEXT("Top=%f	Bottom=%f"), Top, Bottom));
-	//GEngine->AddOnScreenDebugMessage(-1, 999.0f, FColor::Yellow, FString::Printf(TEXT("X0=%f	Y0=%f"), X0, Y0));
-	//GEngine->AddOnScreenDebugMessage(-1, 999.0f, FColor::Yellow, FString::Printf(TEXT("Columns=%d	Rows=%d"), Columns, Rows));
 }
 
 void ASpawnerBricks::SpawnBlocks()
@@ -117,7 +94,6 @@ void ASpawnerBricks::RemoveBlock(ABlockBase* Block)
 	OnDestroyBlock.ExecuteIfBound(Block);
 	if (Blocks.Num() <= 0)
 	{
-			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Win!!!")));
 		OnAllBlocksDestroyed.ExecuteIfBound();
 	}
 }

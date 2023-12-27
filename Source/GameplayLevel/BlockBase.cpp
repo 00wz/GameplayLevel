@@ -20,7 +20,6 @@ void ABlockBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UP
 	if (ball)
 	{
 		Damage();
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("BallHit!"));
 	}
 }
 
